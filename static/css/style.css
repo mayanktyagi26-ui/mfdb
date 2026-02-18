@@ -1,0 +1,75 @@
+/* ===== BODY BACKGROUND ===== */
+body {
+    /* Change this line: */
+    background-image: url("../images/finance-bg.jpg"); 
+    
+    /* Rest stays the same */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+}
+
+
+
+/* Dark overlay for readability */
+.overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+    min-height: 100vh;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.title {
+    color: white;
+    font-weight: 700;
+}
+
+.subtitle {
+    color: #dcdcdc;
+}
+
+.card {
+    border-radius: 15px;
+    color: black; /* Important for white card readability */
+}
+
+.table {
+    background-color: white;
+}
+
+.btn-primary {
+    background-color: #0056b3;
+    border: none;
+}
+
+.btn-success {
+    background-color: #198754;
+    border: none;
+}
+
+/* ===== LOADING OVERLAY ===== */
+#loadingOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    flex-direction: column;
+}
+
+.loader-box {
+    text-align: center;
+}
+
+.loader-text {
+    margin-top: 20px;
+    font-size: 20px;
+}
