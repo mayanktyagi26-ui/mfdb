@@ -8,10 +8,66 @@
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
     <style>
+        /* ===== Blurred Background Image ===== */
+        body {
+            margin: 0;
+            font-family: sans-serif;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("{{ url_for('static', filename='images/finance-bg.jpg') }}") no-repeat center center/cover;
+            filter: blur(8px);
+            z-index: -2;
+        }
+
+        /* Green overlay tint (#0A9671) */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 150, 113, 0.6);
+            z-index: -1;
+        }
+
+        .title {
+            font-weight: 700;
+            color: white;
+        }
+
+        .subtitle {
+            color: #e9f7f2;
+        }
+
+        .download-btn {
+            background: white;
+            color: #0A9671;
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .download-btn:hover {
+            background: #f1f1f1;
+            color: #0A9671;
+        }
+
         /* Loader Overlay */
         #loadingOverlay {
             position: fixed;
@@ -39,7 +95,6 @@
 
 <body>
 
-<div class="overlay">
 <div class="container py-4">
 
     <!-- Header -->
@@ -47,47 +102,43 @@
         <h1 class="title">📊 Mutual Fund Screening Dashboard</h1>
         <p class="subtitle">Professional NAV YoY Analysis Tool</p>
 
-        <p class="subtitle">
-            <a href="https://docs.google.com/spreadsheets/d/15-BDwaha53E9B1AOjLKByI4o4x975Irr437VymHJSpE/export?format=xlsx" 
-               target="_blank">
-               📥 Download Sample Excel
-            </a>
-        </p>
+        <!-- GitHub Download -->
+        <a href="https://raw.githubusercontent.com/mayanktyagi26-ui/mfdb/main/MF_DATA_list.xlsx"
+           target="_blank"
+           class="download-btn">
+           📥 Download Sample Excel Format
+        </a>
     </div>
 
     <!-- Upload Card -->
     <div class="card shadow-lg p-4 mb-5 bg-white rounded">
 
-        <!-- Banner -->
-        <div class="text-center mb-4">
-            <img src="{{ url_for('static', filename='images/finance-bg.jpg') }}"
-                 class="img-fluid rounded"
-                 style="max-height: 200px; width: 100%; object-fit: cover;"
-                 alt="Finance Dashboard Banner">
+        <!-- Instructions -->
+        <div class="alert alert-info">
+            📌 Upload Excel containing <b>SchemeCode</b> and <b>AMC</b> columns.
         </div>
 
-        <!-- Form -->
         <form method="POST" enctype="multipart/form-data">
 
             <div class="mb-3">
-                <label class="form-label">Upload Excel File</label>
+                <label class="form-label fw-bold">Upload Excel File</label>
                 <input type="file" class="form-control" name="file" required>
             </div>
 
             <div class="row">
                 <div class="col-md-6">
-                    <label class="form-label">Start Date</label>
+                    <label class="form-label fw-bold">Start Date</label>
                     <input type="date" class="form-control" name="start_date" required>
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label">End Date</label>
+                    <label class="form-label fw-bold">End Date</label>
                     <input type="date" class="form-control" name="end_date" required>
                 </div>
             </div>
 
             <div class="text-center mt-4">
-                <button type="button" id="analyzeBtn" class="btn btn-primary btn-lg">
+                <button type="button" id="analyzeBtn" class="btn btn-primary btn-lg px-5">
                     🚀 Start Analysis
                 </button>
             </div>
@@ -95,29 +146,25 @@
         </form>
     </div>
 
-    <!-- Results -->
     {% if table %}
     <div class="card shadow-lg p-4 bg-white rounded">
-        <h3 class="mb-4 text-center">Screening Summary</h3>
+        <h3 class="mb-4 text-center">📈 Screening Summary</h3>
 
         <div class="table-responsive">
             {{ table|safe }}
         </div>
 
         <div class="text-center mt-4">
-            <a href="/download">
-                <button class="btn btn-success btn-lg">
-                    📥 Download Excel Report
-                </button>
+            <a href="/download" class="btn btn-success btn-lg px-5">
+                📥 Download Excel Report
             </a>
         </div>
     </div>
     {% endif %}
 
 </div>
-</div>
 
-<!-- Loading Overlay -->
+<!-- Loader -->
 <div id="loadingOverlay">
     <div class="loader-box">
         <div class="spinner-border text-light" style="width: 5rem; height: 5rem;"></div>
@@ -135,18 +182,14 @@
     </div>
 </div>
 
-<!-- Script -->
 <script>
 document.getElementById("analyzeBtn").addEventListener("click", function() {
     var form = document.querySelector("form");
 
     if (form.checkValidity()) {
-        this.disabled = true; // prevent double click
+        this.disabled = true;
         document.getElementById("loadingOverlay").style.display = "flex";
-
-        setTimeout(function() {
-            form.submit();
-        }, 300);
+        setTimeout(() => form.submit(), 300);
     } else {
         form.reportValidity();
     }
