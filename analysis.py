@@ -74,6 +74,15 @@ def run_analysis(excel_file_path, start_date, end_date):
             best = round(yoy['growth'].max(), 2)
             avg = round(yoy['growth'].mean(), 2)
             volatility = round(yoy['growth'].std(), 2)
+            neg_flag = (yoy['growth'] < 0).astype(int)
+            max_neg_streak = neg_flag.groupby(
+                (neg_flag != neg_flag.shift()).cumsum()
+            ).sum().max()
+
+            worst_idx = yoy['growth'].idxmin()
+            recovery = yoy.loc[worst_idx+1:][yoy['growth'] > 0]
+            recovery_months = recovery.index[0] - worst_idx if not recovery.empty else np.nan
+
 
             verdict = (
                 "PASS" if positive_pct >= 70 and worst > -25
@@ -84,12 +93,15 @@ def run_analysis(excel_file_path, start_date, end_date):
             summary_rows.append({
                 "Scheme Code": scheme_code,
                 "AMC": amc,
+                "Total Months": total,
                 "Positive YoY %": positive_pct,
                 "Negative YoY %": negative_pct,
                 "Worst YoY %": worst,
                 "Best YoY %": best,
                 "Average YoY %": avg,
                 "Volatility": volatility,
+                "Max Negative Streak": max_neg_streak,
+                "Recovery Months": recovery_months,
                 "Verdict": verdict
             })
 
