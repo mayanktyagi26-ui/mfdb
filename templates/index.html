@@ -13,7 +13,7 @@
     <style>
         /* ===== Blurred Background Image ===== */
         body {
-            margin: 0;
+            margin: 3;
             font-family: sans-serif;
             position: relative;
             min-height: 100vh;
@@ -27,7 +27,7 @@
             width: 100%;
             height: 100%;
             background: url("{{ url_for('static', filename='images/finance-bg.jpg') }}") no-repeat center center/cover;
-            filter: blur(8px);
+            filter: blur(0px);
             z-index: -2;
         }
 
@@ -39,7 +39,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10, 150, 113, 0.6);
+            background: rgba(4, 155, 97, 0.781);
             z-index: -1;
         }
 
@@ -53,7 +53,7 @@
         }
 
         .download-btn {
-            background: white;
+            background: rgb(253, 254, 255);
             color: #0A9671;
             padding: 10px 18px;
             border-radius: 8px;
@@ -64,7 +64,7 @@
         }
 
         .download-btn:hover {
-            background: #f1f1f1;
+            background: #efefeff1;
             color: #0A9671;
         }
 
@@ -99,7 +99,7 @@
 
     <!-- Header -->
     <div class="text-center mb-5">
-        <h1 class="title">📊 Mutual Fund Screening Dashboard</h1>
+        <h1 class="title">📊 Mutual Fund Screening Dashboard 📊</h1>
         <p class="subtitle">Professional NAV YoY Analysis Tool</p>
 
         <!-- GitHub Download -->
@@ -111,7 +111,7 @@
     </div>
 
     <!-- Upload Card -->
-    <div class="card shadow-lg p-4 mb-5 bg-white rounded">
+    <div class="card shadow-lg p-2 mb-3 rounded upload-card">
 
         <!-- Instructions -->
         <div class="alert alert-info">

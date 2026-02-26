@@ -73,3 +73,40 @@ body {
     margin-top: 20px;
     font-size: 20px;
 }
+
+/* Upload Card Background */
+.upload-card {
+    background-image: url("/static/images/upload-bg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
+    color: white;
+}
+
+/* Dark overlay for readability */
+.upload-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55); /* adjust darkness */
+    z-index: 0;
+}
+
+/* Keep content above overlay */
+.upload-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+
+.upload-card .form-control {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.upload-card .alert {
+    background-color: rgba(255, 255, 255, 0.85);
+    color: black;
+}
+
